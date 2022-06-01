@@ -21,7 +21,7 @@ class YouTube {
     if (envApiKey) this.setKey(envApiKey)
   }
 
-  setFolder(folder) {
+  setFolder (folder) {
     try {
       mkdirp.sync(folder)
       console.log('Using audio folder:', folder)
@@ -37,11 +37,11 @@ class YouTube {
   }
 
   streamDownloaded (id, callback) {
-    const video = ytdl(id)
-    const ffmpeg = new Ffmpeg(video)
-    let sent = false
-
     try {
+      const video = ytdl(id)
+      const ffmpeg = new Ffmpeg(video)
+      let sent = false
+
       const file = `${this.audioFolder}/${id}.mp3`
       ffmpeg
         .format('mp3')
@@ -159,11 +159,11 @@ class YouTube {
       if (cached) return cached
     }
 
-    const video = ytdl(id)
-    const ffmpeg = new Ffmpeg(video)
-    const stream = through2()
-
     try {
+      const video = ytdl(id)
+      const ffmpeg = new Ffmpeg(video)
+      const stream = through2()
+
       const ffmpegObj = ffmpeg.format('mp3').on('end', () => {
         cache[id] = null
         ffmpeg.kill()
